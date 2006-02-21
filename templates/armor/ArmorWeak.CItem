@@ -8,7 +8,7 @@ o.Ambient = Color:New(43,49,51,0)
 o.ArmorAdd    = 100
 o.ArmorType   = ArmorTypes.Weak
 o.RescueFactor = 0.33
-o.RespawnTime = 20
+o.RespawnTime = Cfg.ArmorWeakRespawnTime
 
 --============================================================================
 function o:OnInitTemplate()

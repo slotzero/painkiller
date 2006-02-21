@@ -8,7 +8,7 @@ o.Ambient = Color:New(43,49,51,0)
 o.ArmorAdd    = 200
 o.ArmorType   = ArmorTypes.Strong
 o.RescueFactor = 0.8
-o.RespawnTime = 20
+o.RespawnTime = Cfg.ArmorStrongRespawnTime
 o.s_SubClass ={}
 --============================================================================
 function o:OnInitTemplate()

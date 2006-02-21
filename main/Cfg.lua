@@ -256,6 +256,12 @@ Cfg =
     Location = "",
     ModName = "",
     ClientConsoleLockdown = false,
+
+--  Slot Zero, 02-21-2006: Additional configurations.
+
+    ArmorStrongRespawnTime = 20,
+    ArmorMediumRespawnTime = 20,
+    ArmorWeakRespawnTime = 20,
 }
 --============================================================================
 function Cfg:Save()
