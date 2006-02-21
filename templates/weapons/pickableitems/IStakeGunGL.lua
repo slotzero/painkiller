@@ -36,12 +36,20 @@ end
 --    AddObject("FX_ItemRespawn.CActor",1,Vector:New(x,y,z),nil,true)
 --end
 --============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
 function IStakeGunGL:OnTake(player)
-    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]) then
+    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]
+            and not self.WeaponUp) then
         self.TakeFX(player._Entity, self.Ammo.Stakes, self.Ammo.Grenades)
+        MaybeSetWeaponDown(self)
     end
 
     if Game.GMode ~= GModes.SingleGame and Cfg.WeaponsStay then return true end
+end
+--============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
+function IStakeGunGL:Tick()
+    MaybeSetWeaponUp(self)
 end
 --============================================================================
 function IStakeGunGL:TakeFX(pe,aStakes,aGrenades)
@@ -61,4 +69,23 @@ function IStakeGunGL:TakeFX(pe,aStakes,aGrenades)
     t:SndEnt("pickup",pe)
 end
 Network:RegisterMethod("IStakeGunGL.TakeFX", NCallOn.ServerAndAllClients, NMode.Reliable, "euu")
+--============================================================================
+--Slot Zero, 01-21-2006: Check if weapon needs to be raised.
+function MaybeSetWeaponUp(weapon)
+    if Cfg.WeaponsChargeUp > 0 and not weapon.WeaponUp and weapon.WeaponUpTime < Game.LevelTime then
+        weapon.WeaponUp = true
+        local x,y,z = ENTITY.GetPosition(weapon._Entity)
+        ENTITY.SetPosition(weapon._Entity,x,y+0.7,z)
+    end
+end
+--============================================================================
+--Slot Zero, 01-21-2006: Check if weapon needs to be lowered.
+function MaybeSetWeaponDown(weapon)
+    if Cfg.WeaponsChargeUp > 0 and weapon.WeaponUp then
+        weapon.WeaponUp = false
+        weapon.WeaponUpTime = Game.LevelTime + Cfg.WeaponsChargeUpTime
+        local x,y,z = ENTITY.GetPosition(weapon._Entity)
+        ENTITY.SetPosition(weapon._Entity,x,y-0.7,z)
+    end
+end
 --============================================================================

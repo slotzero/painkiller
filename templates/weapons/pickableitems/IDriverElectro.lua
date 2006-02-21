@@ -30,11 +30,19 @@ function IDriverElectro:Client_OnCreateEntity(entity,param)
     WORLD.AddEntity(e)
 end
 --============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
 function IDriverElectro:OnTake(player)
-    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]) then
+    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]
+            and not self.WeaponUp) then
         self.TakeFX(player._Entity,self.Ammo.Shurikens,self.Ammo.Electro)
+        MaybeSetWeaponDown(self)
     end
     if Game.GMode ~= GModes.SingleGame and Cfg.WeaponsStay then return true end
+end
+--============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
+function IDriverElectro:Tick()
+    MaybeSetWeaponUp(self)
 end
 --============================================================================
 --function IDriverElectro:OnRespawn()

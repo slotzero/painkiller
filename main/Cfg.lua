@@ -262,6 +262,8 @@ Cfg =
     ArmorStrongRespawnTime = 20,
     ArmorMediumRespawnTime = 20,
     ArmorWeakRespawnTime = 20,
+    WeaponsChargeUp = 1,
+    WeaponsChargeUpTime = 15,
 }
 --============================================================================
 function Cfg:Save()

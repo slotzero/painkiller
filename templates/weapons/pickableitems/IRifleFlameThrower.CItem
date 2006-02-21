@@ -19,3 +19,7 @@ o.s_SubClass.SoundsDefinitions =
         dist2 = 50,
     },
 }
+
+--Slot Zero, 02-21-2006: Added these.
+o.WeaponUp = false
+o.WeaponUpTime = 0

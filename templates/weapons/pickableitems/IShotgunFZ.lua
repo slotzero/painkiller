@@ -35,11 +35,19 @@ end
 --    AddObject("FX_ItemRespawn.CActor",1,Vector:New(x,y,z),nil,true)
 --end
 --============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
 function IShotgunFZ:OnTake(player)
-    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]) then
+    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]
+            and not self.WeaponUp) then
         self.TakeFX(player._Entity,self.Ammo.Shotgun,self.Ammo.IceBullets)
+        MaybeSetWeaponDown(self)
     end
     if Game.GMode ~= GModes.SingleGame and Cfg.WeaponsStay then return true end
+end
+--============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
+function IShotgunFZ:Tick()
+    MaybeSetWeaponUp(self)
 end
 --============================================================================
 function IShotgunFZ:TakeFX(pe,aShotgun,aIceBullets)
