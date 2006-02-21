@@ -260,8 +260,8 @@ Cfg =
 --  Slot Zero, 02-21-2006: Additional configurations.
 
     ArmorStrongRespawnTime = 20,
-    ArmorMediumRespawnTime = 20,
-    ArmorWeakRespawnTime = 20,
+    ArmorMediumRespawnTime = 10,
+    ArmorWeakRespawnTime = 5,
     WeaponsChargeUp = 1,
     WeaponsChargeUpTime = 15,
 }
