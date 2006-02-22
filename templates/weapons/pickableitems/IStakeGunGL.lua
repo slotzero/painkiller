@@ -72,7 +72,7 @@ Network:RegisterMethod("IStakeGunGL.TakeFX", NCallOn.ServerAndAllClients, NMode.
 --============================================================================
 --Slot Zero, 01-21-2006: Check if weapon needs to be raised.
 function MaybeSetWeaponUp(weapon)
-    if Cfg.WeaponsChargeUp > 0 and not weapon.WeaponUp and weapon.WeaponUpTime < Game.LevelTime then
+    if Cfg.WeaponsChargeUp > 0 and not weapon.WeaponUp and weapon.WeaponUpTime < INP.GetTime() then
         weapon.WeaponUp = true
         local x,y,z = ENTITY.GetPosition(weapon._Entity)
         ENTITY.SetPosition(weapon._Entity,x,y+0.7,z)
@@ -83,7 +83,7 @@ end
 function MaybeSetWeaponDown(weapon)
     if Cfg.WeaponsChargeUp > 0 and weapon.WeaponUp then
         weapon.WeaponUp = false
-        weapon.WeaponUpTime = Game.LevelTime + Cfg.WeaponsChargeUpTime
+        weapon.WeaponUpTime = INP.GetTime() + Cfg.WeaponsChargeUpTime
         local x,y,z = ENTITY.GetPosition(weapon._Entity)
         ENTITY.SetPosition(weapon._Entity,x,y-0.7,z)
     end
