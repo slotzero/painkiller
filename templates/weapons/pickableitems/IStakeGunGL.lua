@@ -74,6 +74,7 @@ Network:RegisterMethod("IStakeGunGL.TakeFX", NCallOn.ServerAndAllClients, NMode.
 function MaybeSetWeaponUp(weapon)
     if Cfg.WeaponsChargeUp > 0 and not weapon.WeaponUp and weapon.WeaponUpTime < INP.GetTime() then
         weapon.WeaponUp = true
+        BindFX(weapon._Entity,"energy_red",weapon.Scale)
         local x,y,z = ENTITY.GetPosition(weapon._Entity)
         ENTITY.SetPosition(weapon._Entity,x,y+0.7,z)
     end
@@ -84,6 +85,7 @@ function MaybeSetWeaponDown(weapon)
     if Cfg.WeaponsChargeUp > 0 and weapon.WeaponUp then
         weapon.WeaponUp = false
         weapon.WeaponUpTime = INP.GetTime() + Cfg.WeaponsChargeUpTime
+        ENTITY.KillAllChildrenByName(weapon._Entity,"energy_red")
         local x,y,z = ENTITY.GetPosition(weapon._Entity)
         ENTITY.SetPosition(weapon._Entity,x,y-0.7,z)
     end
