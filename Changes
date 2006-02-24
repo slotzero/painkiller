@@ -1,0 +1,26 @@
+$Id: Changes,v 1.1 2006/02/24 18:49:57 slotzero Exp $
+
+Version 0.1  Fri Feb 24 13:28:25 EST 2006
+
+    - Bug Fixes
+
+        - Freezer ammo now included in MP soul pickup.
+
+        - Prevent ammo pick with max ammo for minigun, shurikens, and electro.
+
+    - Changes
+
+        - In weapons stay mode, you can continue to get ammo from a weapon even if
+          you already have a that weapon.  The weapon will raise up a little to
+          indicate when it is charged with ammo.
+
+        - The respawn times of weak and medium armor have been changed to 5 and 10
+          respectively.
+
+    - config.ini
+
+        - Cfg.WeaponsChargeUp [0/1: 1]
+        - Cfg.WeaponsChargeUpTime [seconds: 15]
+        - Cfg.ArmorStrongRespawnTime [seconds: 20]
+        - Cfg.ArmorMediumRespawnTime [seconds: 10]
+        - Cfg.ArmorWeakRespawnTime [seconds: 5]
