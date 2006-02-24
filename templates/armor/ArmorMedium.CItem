@@ -10,7 +10,7 @@ o.Ambient = Color:New(43,49,51,0)
 o.ArmorAdd    = 150
 o.ArmorType   = ArmorTypes.Medium
 o.RescueFactor = 0.6
-o.RespawnTime = Cfg.ArmorMediumRespawnTime
+o.RespawnTime = Cfg.ArmorMediumRespawnTime  --Slot Zero, 02-21-2006: Additional configurations.
 --============================================================================
 function o:OnInitTemplate()
     self.CubeMap = nil

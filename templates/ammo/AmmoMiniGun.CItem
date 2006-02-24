@@ -22,6 +22,7 @@ function AmmoMiniGun:OnCreateEntity()
     ENTITY.EnableNetworkSynchronization(self._Entity)
 end
 --============================================================================
+--Slot Zero, 02-23-2006: MP max ammo fix.
 function AmmoMiniGun:OnTake(player)
     local max_ammo = CPlayer.s_SubClass.MaxAmmo.MiniGun
     if Game:IsServer() then

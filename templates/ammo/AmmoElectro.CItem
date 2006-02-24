@@ -21,6 +21,7 @@ function AmmoElectro:OnCreateEntity()
     ENTITY.EnableNetworkSynchronization(self._Entity)
 end
 --============================================================================
+--Slot Zero, 02-23-2006: MP max ammo fix.
 function AmmoElectro:OnTake(player)
     local max_ammo = CPlayer.s_SubClass.MaxAmmo.Electro
     if Game:IsServer() then
