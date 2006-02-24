@@ -72,22 +72,24 @@ Network:RegisterMethod("IStakeGunGL.TakeFX", NCallOn.ServerAndAllClients, NMode.
 --============================================================================
 --Slot Zero, 01-21-2006: Check if weapon needs to be raised.
 function MaybeSetWeaponUp(weapon)
-    if Cfg.WeaponsChargeUp > 0 and not weapon.WeaponUp and weapon.WeaponUpTime < INP.GetTime() then
-        weapon.WeaponUp = true
-        BindFX(weapon._Entity,"energy_red",weapon.Scale)
-        local x,y,z = ENTITY.GetPosition(weapon._Entity)
-        ENTITY.SetPosition(weapon._Entity,x,y+0.7,z)
+    if Cfg.WeaponsStay and Cfg.WeaponsChargeUp > 0 then
+        if not weapon.WeaponUp and weapon.WeaponUpTime < INP.GetTime() then
+            weapon.WeaponUp = true
+            local x,y,z = ENTITY.GetPosition(weapon._Entity)
+            ENTITY.SetPosition(weapon._Entity,x,y+0.7,z)
+        end
     end
 end
 --============================================================================
 --Slot Zero, 01-21-2006: Check if weapon needs to be lowered.
 function MaybeSetWeaponDown(weapon)
-    if Cfg.WeaponsChargeUp > 0 and weapon.WeaponUp then
-        weapon.WeaponUp = false
-        weapon.WeaponUpTime = INP.GetTime() + Cfg.WeaponsChargeUpTime
-        ENTITY.KillAllChildrenByName(weapon._Entity,"energy_red")
-        local x,y,z = ENTITY.GetPosition(weapon._Entity)
-        ENTITY.SetPosition(weapon._Entity,x,y-0.7,z)
+    if Cfg.WeaponsStay and Cfg.WeaponsChargeUp > 0 then
+        if weapon.WeaponUp then
+            weapon.WeaponUp = false
+            weapon.WeaponUpTime = INP.GetTime() + Cfg.WeaponsChargeUpTime
+            local x,y,z = ENTITY.GetPosition(weapon._Entity)
+            ENTITY.SetPosition(weapon._Entity,x,y-0.7,z)
+        end
     end
 end
 --============================================================================
