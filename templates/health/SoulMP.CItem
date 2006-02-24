@@ -83,10 +83,10 @@ function SoulMP:OnTake(player)
         if player.Health > self.MaxLimit then player.Health = self.MaxLimit  end
     end
     local a = self.Ammo
-    self.TakeFX(player._Entity,player.Health,self.WeaponSlot,a.Shotgun,a.MiniGun,a.Grenades,a.Stakes,a.Shurikens,a.Electro,a.Rifle, a.FlameThrower, a.Bolt, a.HeaterBomb)
+    self.TakeFX(player._Entity,player.Health,self.WeaponSlot,a.Shotgun,a.MiniGun,a.Grenades,a.Stakes,a.Shurikens,a.Electro,a.Rifle,a.FlameThrower,a.Bolt,a.HeaterBomb,a.IceBullets)
 end
 --============================================================================
-function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,aShurikens,aElectro,aRifle,aFlameT,aBolt,aHeaterBomb)
+function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,aShurikens,aElectro,aRifle,aFlameT,aBolt,aHeaterBomb,aIceBullets)
     local player = EntityToObject[pe]
     if player then
         player.Health = health
@@ -100,6 +100,7 @@ function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,
         player.Ammo.FlameThrower = player.Ammo.FlameThrower + aFlameT
         player.Ammo.Bolt         = player.Ammo.Bolt         + aBolt
         player.Ammo.HeaterBomb   = player.Ammo.HeaterBomb   + aHeaterBomb
+        player.Ammo.IceBullets   = player.Ammo.IceBullets   + aIceBullets
 
         player:CheckMaxAmmo()
         player._healthDecCnt = 0
@@ -111,5 +112,5 @@ function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,
     end
     Templates["SoulMP.CItem"]:SndEnt("pickup",pe)
 end
-Network:RegisterMethod("SoulMP.TakeFX", NCallOn.ServerAndAllClients, NMode.Reliable, "eubuuuuuuuuuu")
+Network:RegisterMethod("SoulMP.TakeFX", NCallOn.ServerAndAllClients, NMode.Reliable, "eubuuuuuuuuuuu")
 --============================================================================
