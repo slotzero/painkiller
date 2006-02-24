@@ -22,7 +22,10 @@ function AmmoElectro:OnCreateEntity()
 end
 --============================================================================
 function AmmoElectro:OnTake(player)
-    if player.Ammo.Electro >= CPlayer.s_SubClass.MaxAmmo.Electro then return true end
+    local max_ammo = CPlayer.s_SubClass.MaxAmmo.Electro
+    if Game:IsServer() then
+        max_ammo = CPlayer.s_SubClass.MPMaxAmmo.Electro end
+    if player.Ammo.Electro >= max_ammo then return true end
     self.TakeFX(player._Entity, self.AmmoAdd)
 	Game.PlayerAmmoFound =  Game.PlayerAmmoFound + 1
 end

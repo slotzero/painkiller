@@ -22,7 +22,10 @@ function AmmoShurikens:OnCreateEntity()
 end
 --============================================================================
 function AmmoShurikens:OnTake(player)
-    if player.Ammo.Shurikens >= CPlayer.s_SubClass.MaxAmmo.Shurikens then return true end
+    local max_ammo = CPlayer.s_SubClass.MaxAmmo.Shurikens
+    if Game:IsServer() then
+        max_ammo = CPlayer.s_SubClass.MPMaxAmmo.Shurikens end
+    if player.Ammo.Shurikens >= max_ammo then return true end
 
     self.TakeFX(player._Entity, self.AmmoAdd)
 	Game.PlayerAmmoFound =  Game.PlayerAmmoFound + 1
