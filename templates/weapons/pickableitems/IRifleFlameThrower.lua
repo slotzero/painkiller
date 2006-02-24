@@ -33,17 +33,24 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IRifleFlameThrower:OnTake(player)
-    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]
-        and not self.WeaponUp) then
+    if Game.GMode == GModes.SingleGame then
         self.TakeFX(player._Entity,self.Ammo.Rifle,self.Ammo.FlameThrower)
-        MaybeSetWeaponDown(self)
+    else
+        if not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex] and not self.WeaponUp) then
+            if self.Ammo.Rifle > 0 and player.Ammo.Rifle < CPlayer.s_SubClass.MPMaxAmmo.Rifle or
+                    self.Ammo.FlameThrower > 0 and player.Ammo.FlameThrower < CPlayer.s_SubClass.MPMaxAmmo.FlameThrower or
+                    not player.EnabledWeapons[self.SlotIndex] then
+                self.TakeFX(player._Entity,self.Ammo.Rifle,self.Ammo.FlameThrower)
+                MaybeSetWeaponDown(self)
+            end
+        end
+        if Cfg.WeaponsStay then return true end
     end
-    if Game.GMode ~= GModes.SingleGame and Cfg.WeaponsStay then return true end
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IRifleFlameThrower:Tick()
-    MaybeSetWeaponUp(self)
+    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
 end
 --============================================================================
 --function IRifleFlameThrower:OnRespawn()

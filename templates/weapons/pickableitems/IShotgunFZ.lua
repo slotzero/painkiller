@@ -37,17 +37,24 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IShotgunFZ:OnTake(player)
-    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]
-            and not self.WeaponUp) then
+    if Game.GMode == GModes.SingleGame then
         self.TakeFX(player._Entity,self.Ammo.Shotgun,self.Ammo.IceBullets)
-        MaybeSetWeaponDown(self)
+    else
+        if not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex] and not self.WeaponUp) then
+            if self.Ammo.Shotgun > 0 and player.Ammo.Shotgun < CPlayer.s_SubClass.MPMaxAmmo.Shotgun or
+                    self.Ammo.IceBullets > 0 and player.Ammo.IceBullets < CPlayer.s_SubClass.MPMaxAmmo.IceBullets or
+                    not player.EnabledWeapons[self.SlotIndex] then
+                self.TakeFX(player._Entity,self.Ammo.Shotgun,self.Ammo.IceBullets)
+                MaybeSetWeaponDown(self)
+            end
+        end
+        if Cfg.WeaponsStay then return true end
     end
-    if Game.GMode ~= GModes.SingleGame and Cfg.WeaponsStay then return true end
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IShotgunFZ:Tick()
-    MaybeSetWeaponUp(self)
+    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
 end
 --============================================================================
 function IShotgunFZ:TakeFX(pe,aShotgun,aIceBullets)

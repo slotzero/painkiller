@@ -32,17 +32,24 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IBoltGunHeater:OnTake(player)
-    if Game.GMode == GModes.SingleGame or not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex]
-            and not self.WeaponUp) then
+    if Game.GMode == GModes.SingleGame then
         self.TakeFX(player._Entity,self.Ammo.Bolt,self.Ammo.HeaterBomb)
-        MaybeSetWeaponDown(self)
+    else
+        if not (Cfg.WeaponsStay and player.EnabledWeapons[self.SlotIndex] and not self.WeaponUp) then
+            if self.Ammo.Bolt > 0 and player.Ammo.Bolt < CPlayer.s_SubClass.MPMaxAmmo.Bolt or
+                    self.Ammo.HeaterBomb > 0 and player.Ammo.HeaterBomb < CPlayer.s_SubClass.MPMaxAmmo.HeaterBomb or
+                    not player.EnabledWeapons[self.SlotIndex] then
+                self.TakeFX(player._Entity,self.Ammo.Bolt,self.Ammo.HeaterBomb)
+                MaybeSetWeaponDown(self)
+            end
+        end
+        if Cfg.WeaponsStay then return true end
     end
-    if Game.GMode ~= GModes.SingleGame and Cfg.WeaponsStay then return true end
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IBoltGunHeater:Tick()
-    MaybeSetWeaponUp(self)
+    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
 end
 --============================================================================
 --function IBoltGunHeater:OnRespawn()
