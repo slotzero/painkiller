@@ -77,16 +77,19 @@ function SoulMP:Client_OnCreateEntity(entity)
 end
 --============================================================================
 function SoulMP:OnTake(player)
+--Slot Zero, 02-24-2006: Freeze ammo fix.
    --Log("SoulMP:OnTake: "..player._Name.."\n")
     if player.Health < self.MaxLimit then
         player.Health = player.Health + self.HealthAdd
         if player.Health > self.MaxLimit then player.Health = self.MaxLimit  end
     end
     local a = self.Ammo
-    self.TakeFX(player._Entity,player.Health,self.WeaponSlot,a.Shotgun,a.MiniGun,a.Grenades,a.Stakes,a.Shurikens,a.Electro,a.Rifle,a.FlameThrower,a.Bolt,a.HeaterBomb,a.IceBullets)
+    local bits = a.HeaterBomb + 256 * a.IceBullets
+    self.TakeFX(player._Entity,player.Health,self.WeaponSlot,a.Shotgun,a.MiniGun,a.Grenades,a.Stakes,a.Shurikens,a.Electro,a.Rifle,a.FlameThrower,a.Bolt,bits)
 end
 --============================================================================
-function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,aShurikens,aElectro,aRifle,aFlameT,aBolt,aHeaterBomb,aIceBullets)
+--Slot Zero, 02-24-2006: Freeze ammo fix.
+function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,aShurikens,aElectro,aRifle,aFlameT,aBolt,bits)
     local player = EntityToObject[pe]
     if player then
         player.Health = health
@@ -99,6 +102,8 @@ function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,
         player.Ammo.Rifle        = player.Ammo.Rifle        + aRifle
         player.Ammo.FlameThrower = player.Ammo.FlameThrower + aFlameT
         player.Ammo.Bolt         = player.Ammo.Bolt         + aBolt
+        local aIceBullets = math.floor (bits/256)
+        local aHeaterBomb = bits - (aIceBullets * 256)
         player.Ammo.HeaterBomb   = player.Ammo.HeaterBomb   + aHeaterBomb
         player.Ammo.IceBullets   = player.Ammo.IceBullets   + aIceBullets
 
@@ -112,5 +117,5 @@ function SoulMP:TakeFX(pe,health,weaponSlot,aShotgun,aMiniGun,aGrenades,aStakes,
     end
     Templates["SoulMP.CItem"]:SndEnt("pickup",pe)
 end
-Network:RegisterMethod("SoulMP.TakeFX", NCallOn.ServerAndAllClients, NMode.Reliable, "eubuuuuuuuuuuu")
+Network:RegisterMethod("SoulMP.TakeFX", NCallOn.ServerAndAllClients, NMode.Reliable, "eubuuuuuuuuuu")
 --============================================================================
