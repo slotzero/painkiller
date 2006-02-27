@@ -41,7 +41,7 @@ function IRifleFlameThrower:OnTake(player)
                     self.Ammo.FlameThrower > 0 and player.Ammo.FlameThrower < CPlayer.s_SubClass.MPMaxAmmo.FlameThrower or
                     not player.EnabledWeapons[self.SlotIndex] then
                 self.TakeFX(player._Entity,self.Ammo.Rifle,self.Ammo.FlameThrower)
-                MaybeSetWeaponDown(self)
+                maybe_offset_weapon_down(self)
             end
         end
         if Cfg.WeaponsStay then return true end
@@ -50,7 +50,7 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IRifleFlameThrower:Tick()
-    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
+    maybe_offset_weapon_up(self)
 end
 --============================================================================
 --function IRifleFlameThrower:OnRespawn()

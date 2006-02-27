@@ -40,7 +40,7 @@ function IDriverElectro:OnTake(player)
                     self.Ammo.Electro > 0 and player.Ammo.Electro < CPlayer.s_SubClass.MPMaxAmmo.Electro or
                     not player.EnabledWeapons[self.SlotIndex] then
                 self.TakeFX(player._Entity,self.Ammo.Shurikens,self.Ammo.Electro)
-                MaybeSetWeaponDown(self)
+                maybe_offset_weapon_down(self)
             end
         end
         if Cfg.WeaponsStay then return true end
@@ -49,7 +49,7 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IDriverElectro:Tick()
-    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
+    maybe_offset_weapon_up(self)
 end
 --============================================================================
 --function IDriverElectro:OnRespawn()

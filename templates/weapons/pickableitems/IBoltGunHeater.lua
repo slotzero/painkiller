@@ -40,7 +40,7 @@ function IBoltGunHeater:OnTake(player)
                     self.Ammo.HeaterBomb > 0 and player.Ammo.HeaterBomb < CPlayer.s_SubClass.MPMaxAmmo.HeaterBomb or
                     not player.EnabledWeapons[self.SlotIndex] then
                 self.TakeFX(player._Entity,self.Ammo.Bolt,self.Ammo.HeaterBomb)
-                MaybeSetWeaponDown(self)
+                maybe_offset_weapon_down(self)
             end
         end
         if Cfg.WeaponsStay then return true end
@@ -49,7 +49,7 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IBoltGunHeater:Tick()
-    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
+    maybe_offset_weapon_up(self)
 end
 --============================================================================
 --function IBoltGunHeater:OnRespawn()

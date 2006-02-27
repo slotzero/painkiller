@@ -40,7 +40,7 @@ function IMiniGunRL:OnTake(player)
                     self.Ammo.Grenades > 0 and player.Ammo.Grenades < CPlayer.s_SubClass.MPMaxAmmo.Grenades or
                     not player.EnabledWeapons[self.SlotIndex] then
                 self.TakeFX(player._Entity,self.Ammo.MiniGun,self.Ammo.Grenades)
-                MaybeSetWeaponDown(self)
+                maybe_offset_weapon_down(self)
             end
         end
         if Cfg.WeaponsStay then return true end
@@ -49,7 +49,7 @@ end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
 function IMiniGunRL:Tick()
-    if Game.GMode ~= GModes.SingleGame then MaybeSetWeaponUp(self) end
+    maybe_offset_weapon_up(self)
 end
 --============================================================================
 --function IMiniGunRL:OnRespawn()
