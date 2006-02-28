@@ -1358,6 +1358,10 @@ function Game:SayToAll(clientID,txt,color)
     if not ps and not (clientID == ServerID and IsDedicatedServer()) then return end -- juz wyszedl
 
     Game.ConsoleClientMessage(clientID,txt,color)
+
+    --Slot Zero, 02-27-2006: Ignore PK++ command.
+    if (txt == "CMD:UPDATESTATSALL") then return end
+
 end
 Network:RegisterMethod("Game.SayToAll", NCallOn.Server, NMode.Reliable, "bsi")
 --============================================================================
