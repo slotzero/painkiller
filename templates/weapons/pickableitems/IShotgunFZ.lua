@@ -15,6 +15,7 @@ function IShotgunFZ:OnCreateEntity()
     if self.Ammo.Shotgun > self.Ammo.IceBullets then param = "s" end
     ENTITY.SetSynchroString(self._Entity,"IShotgunFZ.CItem"..":"..param)
 
+    self:AddTimer("GetWeaponUp", 0.1)
     self:Client_OnCreateEntity(self._Entity,param)
 end
 --============================================================================
@@ -53,8 +54,8 @@ function IShotgunFZ:OnTake(player)
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
-function IShotgunFZ:Tick()
-    maybe_offset_weapon_up(self)
+function IShotgunFZ:GetWeaponUp()
+    get_weapon_up(self)
 end
 --============================================================================
 function IShotgunFZ:TakeFX(pe,aShotgun,aIceBullets)

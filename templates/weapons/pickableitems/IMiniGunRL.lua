@@ -15,6 +15,7 @@ function IMiniGunRL:OnCreateEntity()
     if self.Ammo.MiniGun > self.Ammo.Grenades then param = "c" end
     ENTITY.SetSynchroString(self._Entity,"IMiniGunRL.CItem"..":"..param)
 
+    self:AddTimer("GetWeaponUp", 0.1)
     self:Client_OnCreateEntity(self._Entity,param)
 end
 --============================================================================
@@ -48,8 +49,8 @@ function IMiniGunRL:OnTake(player)
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
-function IMiniGunRL:Tick()
-    maybe_offset_weapon_up(self)
+function IMiniGunRL:GetWeaponUp()
+    get_weapon_up(self)
 end
 --============================================================================
 --function IMiniGunRL:OnRespawn()

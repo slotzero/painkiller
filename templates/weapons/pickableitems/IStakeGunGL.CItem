@@ -21,6 +21,4 @@ o.s_SubClass.SoundsDefinitions =
     },
 }
 
---Slot Zero, 02-21-2006: Added these.
-o.WeaponUp = false
-o.WeaponUpTime = 0
+o.WeaponUp = false  --Slot Zero, 02-21-2006: Added this.

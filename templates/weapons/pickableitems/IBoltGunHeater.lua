@@ -15,6 +15,7 @@ function IBoltGunHeater:OnCreateEntity()
     if self.Ammo.Bolt > self.Ammo.HeaterBomb then param = "b" end
     ENTITY.SetSynchroString(self._Entity,"IBoltGunHeater.CItem"..":"..param)
 
+    self:AddTimer("GetWeaponUp", 0.1)
     self:Client_OnCreateEntity(self._Entity,param)
 end
 --============================================================================
@@ -48,8 +49,8 @@ function IBoltGunHeater:OnTake(player)
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
-function IBoltGunHeater:Tick()
-    maybe_offset_weapon_up(self)
+function IBoltGunHeater:GetWeaponUp()
+    get_weapon_up(self)
 end
 --============================================================================
 --function IBoltGunHeater:OnRespawn()

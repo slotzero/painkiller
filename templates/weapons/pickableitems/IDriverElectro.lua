@@ -15,6 +15,7 @@ function IDriverElectro:OnCreateEntity()
     if self.Ammo.Shurikens > self.Ammo.Electro then param = "s" end
     ENTITY.SetSynchroString(self._Entity,"IDriverElectro.CItem"..":"..param)
 
+    self:AddTimer("GetWeaponUp", 0.1)
     self:Client_OnCreateEntity(self._Entity,param)
 end
 --============================================================================
@@ -48,8 +49,8 @@ function IDriverElectro:OnTake(player)
 end
 --============================================================================
 --Slot Zero, 02-21-2006: Charge up weapon.
-function IDriverElectro:Tick()
-    maybe_offset_weapon_up(self)
+function IDriverElectro:GetWeaponUp()
+    get_weapon_up(self)
 end
 --============================================================================
 --function IDriverElectro:OnRespawn()

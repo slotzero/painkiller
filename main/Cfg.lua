@@ -262,7 +262,7 @@ Cfg =
     ArmorStrongRespawnTime = 20,
     ArmorMediumRespawnTime = 10,
     ArmorWeakRespawnTime = 5,
-    WeaponsChargeUp = 1,
+    WeaponsChargeUp = true,
     WeaponsChargeUpTime = 15,
 }
 --============================================================================
