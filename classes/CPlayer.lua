@@ -80,6 +80,9 @@ CPlayer =
     collisionMaxSpeed = 75,
     collisionDamageModif = 1.0,		-- damage = (speed - collisionSpeedMin) * collisionDamageModif
 
+    --SlotZero, 03-02-2006: Prevent jump pad damage.
+    JumpPadHack = false,
+
     s_SubClass =
     {
         Ammo =
@@ -1608,7 +1611,12 @@ function CPlayer:OnHitGround(speed)
         end
         d = d * self.collisionDamageModif
         Game:Print("Hit Ground - Speed: "..-speed..", Damage: "..d)
-        self:OnDamage(d,nil,AttackTypes.HitGround)
+
+        --SlotZero, 03-02-2006: Prevent jump pad damage.
+        if not self.JumpPadHack then
+            self:OnDamage(d,nil,AttackTypes.HitGround)
+        end
+
     else
         local minspd = -12
         if Game.GMode == GModes.SingleGame then minspd = -8 end
