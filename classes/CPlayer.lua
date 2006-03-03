@@ -2196,5 +2196,9 @@ function CPlayer:WeaponChangeConfirmation(entity,slot)
 end
 Network:RegisterMethod("CPlayer.WeaponChangeConfirmation", NCallOn.ServerAndSingleClient, NMode.Reliable, "eb")
 --============================================================================
-
+--SlotZero, 03-02-2006: Prevent jump pad damage.
+function CPlayer:JumpPadTouch()
+    self:ReleaseTimers()
+    self.JumpPadHack = false
+end
 --============================================================================

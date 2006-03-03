@@ -53,15 +53,9 @@ function JumpPad:OnEnter(entity)
         obj.JumpPadHack = true
         obj:AddTimer("JumpPadTouch",0.2)
 
-        self:AddTimer("Hide",0.1)
+        self:AddTimer("Hide",0.2)
         self.EnterFX(self._Entity)
     end
-end
-
---SlotZero, 03-02-2006: Prevent jump pad damage.
-function CPlayer:JumpPadTouch()
-    self:ReleaseTimers()
-    self.JumpPadHack = false
 end
 
 function JumpPad:EnterFX(entity)
