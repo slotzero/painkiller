@@ -734,7 +734,10 @@ Network:RegisterMethod("Game.OnPlayerLeaveGame", NCallOn.ServerAndAllClients, NM
 function Game:PlayerKill(clientID)
 	local player = Game:FindPlayerByClientID(clientID)
 	if player then
-		player:OnDamage(999999,nil,AttackTypes.ConsoleKill)
+        if player.LastSuicide < INP.GetTime() then
+		    player:OnDamage(999999,nil,AttackTypes.ConsoleKill)
+            player.LastSuicide = INP.GetTime() + 30
+        end
 	end
 end
 Network:RegisterMethod("Game.PlayerKill", NCallOn.Server, NMode.Reliable, "b")

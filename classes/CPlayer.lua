@@ -83,6 +83,9 @@ CPlayer =
     --SlotZero, 03-02-2006: Prevent jump pad damage.
     JumpPadHack = false,
 
+    --SlotZero, 03-03-2006: Prevent excessive suicide.
+    LastSuicide = 0,
+
     s_SubClass =
     {
         Ammo =
