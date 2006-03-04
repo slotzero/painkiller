@@ -77,3 +77,27 @@ function IStakeGunGL:TakeFX(pe,aStakes,aGrenades)
 end
 Network:RegisterMethod("IStakeGunGL.TakeFX", NCallOn.ServerAndAllClients, NMode.Reliable, "euu")
 --============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
+function maybe_offset_weapon_down(self)
+    if Cfg.WeaponsStay and Cfg.WeaponsChargeUp then
+        if self.WeaponUp then
+            self.WeaponUp = false
+            local x,y,z = ENTITY.GetPosition(self._Entity)
+            ENTITY.SetPosition(self._Entity,x,y-0.7,z)
+            self:AddTimer("GetWeaponUp", Cfg.WeaponsChargeUpTime)
+        end
+    end
+end
+--============================================================================
+--Slot Zero, 02-21-2006: Charge up weapon.
+function get_weapon_up(self)
+    if Game.GMode ~= GModes.SingleGame then
+        if Cfg.WeaponsStay and Cfg.WeaponsChargeUp and not self.WeaponUp then
+            self.WeaponUp = true
+            local x,y,z = ENTITY.GetPosition(self._Entity)
+            ENTITY.SetPosition(self._Entity,x,y+0.7,z)
+        end
+    end
+    self:ReleaseTimers()
+end
+--============================================================================
