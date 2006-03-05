@@ -268,6 +268,8 @@ function Game:AfterNewClientConnected(clientID)
     SendNetMethod(Game.SetTimeLimit,clientID, true, true,MPCfg.TimeLimit,Game._TimeLimitOut,Game._countTimer)
     -- reset ping
     NET.ClientPingReset(clientID)
+    --Slot Zero, 03-04-2006: Added welcome message.
+    SendNetMethod(Game.ConsoleMessage,clientID,true,true,"#4Welcome #4to Shmack's Painkiller #4server!")
 end
 --============================================================================
 -- [ENGINE - SERVER ONLY]
