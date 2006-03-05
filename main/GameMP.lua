@@ -433,7 +433,7 @@ function Game:OnMultiplayerServerTick(delta)
 			end
 		end
 		GAMESPY.SetServerInfo(
-			PK_VERSION,
+			PK_VERSION.."+",
 			Cfg.ServerName,
 			Cfg.ServerPassword,
 			Lev._Name,
