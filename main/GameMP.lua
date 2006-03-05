@@ -737,6 +737,8 @@ function Game:PlayerKill(clientID)
         if player.LastSuicide < INP.GetTime() then
 		    player:OnDamage(999999,nil,AttackTypes.ConsoleKill)
             player.LastSuicide = INP.GetTime() + 30
+        else
+            SendNetMethod(Game.ConsoleMessage,clientID,true,true,"You can only suicide once every 30 seconds")
         end
 	end
 end
