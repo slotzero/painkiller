@@ -80,11 +80,16 @@ CPlayer =
     collisionMaxSpeed = 75,
     collisionDamageModif = 1.0,		-- damage = (speed - collisionSpeedMin) * collisionDamageModif
 
-    --SlotZero, 03-02-2006: Prevent jump pad damage.
+    --Slot Zero, 03-02-2006: Prevent jump pad damage.
     JumpPadHack = false,
 
-    --SlotZero, 03-03-2006: Prevent excessive suicide.
+    --Slot Zero, 03-03-2006: Prevent excessive suicide.
     LastSuicide = 0,
+
+    --Slot Zero, 03-08-2006: Chat spam protection.
+    ChatMsgTime = 0,
+    ChatMsgCount = 0,
+    ChatMsgBlock = 0,
 
     s_SubClass =
     {
@@ -575,6 +580,14 @@ end
 --============================================================================
 -- [ SERVER ]
 function CPlayer:ServerTick(delta)
+
+    --Slot Zero, 03-08-2006: Chat spam protection.
+    if self.ChatMsgTime > 0 then
+        if INP.GetTime() - self.ChatMsgTime > 5 then
+            self.ChatMsgTime = 0
+            self.ChatMsgCount = 0
+        end
+    end
 
     if self._sendRagdollImpulse then
         local a = self._sendRagdollImpulse

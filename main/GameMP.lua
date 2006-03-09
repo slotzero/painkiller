@@ -1364,6 +1364,38 @@ function Game:SayToAll(clientID,txt,color)
     local ps = Game.PlayerStats[clientID]
     if not ps and not (clientID == ServerID and IsDedicatedServer()) then return end -- juz wyszedl
 
+    --Slot Zero, 03-08-2006: Chat spam protection.
+    local player = Game:FindPlayerByClientID(clientID)
+    local timestamp = INP.GetTime()
+    local spam = false
+
+    if player.ChatMsgBlock > timestamp then
+        local time = math.ceil(player.ChatMsgBlock - timestamp)
+        local seconds = " seconds"
+        if time == 1 then seconds = " second" end
+        SendNetMethod(Game.ConsoleMessage,clientID,true,true,"You will be allowed to speak in "..time..seconds)
+        return
+    end
+
+    player.ChatMsgCount = player.ChatMsgCount + 1
+    player.ChatMsgBlock = 0
+
+    if player.ChatMsgCount >= 5 then
+        spam = true
+    elseif player.ChatMsgCount >= 3 and (timestamp - player.ChatMsgTime) <= 1 then
+        spam = true
+    elseif player.ChatMsgCount >= 2 and string.len(txt) > 10 and (timestamp - player.ChatMsgTime) <= 0.75 then
+        spam = true
+    end
+
+    if spam then
+        player.ChatMsgBlock = timestamp + 15
+        SendNetMethod(Game.ConsoleMessage,clientID,true,true,"** CHAT SPAM DETECTED -- YOU CANNOT SPEAK FOR 15 SECONDS **")
+        return
+    end
+
+    player.ChatMsgTime = timestamp
+
     --Slot Zero, 02-27-2006: Ignore PK++ command.
     if (txt == "CMD:UPDATESTATSALL") then return end
 
