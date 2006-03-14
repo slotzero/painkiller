@@ -1664,7 +1664,14 @@ function FixMyItems(mapname)
     if not Game:IsServer() then return end
 
     if mapname == nil then return
+    elseif mapname == "DM_5quid01" then
+        RemoveMyItem("AmmoStakes_001")
+    elseif mapname == "DM_Ballistic" then
+        RemoveMyItem("AmmoShotgun_001")
     elseif mapname == "DM_ExMortis" then
+        RemoveMyItem("AmmoStakes_001")
+        RemoveMyItem("AmmoStakes_002")
+    elseif mapname == "DM_Pyscho" then
         RemoveMyItem("AmmoStakes_001")
         RemoveMyItem("AmmoStakes_002")
     elseif mapname == "DM_Illuminati" then
