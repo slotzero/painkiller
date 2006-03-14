@@ -216,6 +216,9 @@ function Game:AfterWorldSynchronization(mapName,levelName)
     WORLD.SetGameVisible(true)
     INP.Reset()
     MOUSE.Lock()
+
+    --Slot Zero, 03-13-2006: Fix my items.
+    FixMyItems(levelName)
 end
 --============================================================================
 -- [ENGINE - SERVER ONLY - BEFORE SERVER STARTUP] --
@@ -1648,5 +1651,24 @@ function Game_RestoreServerSettings()
 	if Lev._Name ~= MPCfgBackup.Map then
 		Console:Cmd_MAP(MPCfgBackup.Map)
 	end
+end
+--============================================================================
+--Slot Zero, 03-13-2006: Remove my item.
+function RemoveMyItem(name)
+    local obj = GObjects:FindByName(name)
+    if obj then GObjects:Delete(obj) end
+end
+--============================================================================
+--Slot Zero, 03-13-2006: Fix my items.
+function FixMyItems(mapname)
+    if not Game:IsServer() then return end
+
+    if mapname == nil then return
+    elseif mapname == "DM_ExMortis" then
+        RemoveMyItem("AmmoStakes_001")
+        RemoveMyItem("AmmoStakes_002")
+    elseif mapname == "DM_Illuminati" then
+        RemoveMyItem("MegaPack_003")
+    end
 end
 --============================================================================
