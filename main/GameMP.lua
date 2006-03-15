@@ -964,6 +964,12 @@ end
 --============================================================================
 -- [NET - SERVER]
 function Game:StartVotingRequest(clientID,cmd,params)
+
+    if math.ceil(Game._TimeLimitOut) < 30 then
+        SendNetMethod(Game.ConsoleMessage,clientID,true,true,"** WAITING FOR PLAYERS TO LOAD **")
+        return
+    end
+
 	local allowed = false
 
 	if (cmd == "kick" or cmd == "kickid") and Cfg.UserKick then
