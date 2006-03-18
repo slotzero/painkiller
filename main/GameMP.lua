@@ -1649,7 +1649,7 @@ function FixMyItems(mapname)
     elseif mapname == "DM_ExMortis" then
         RemoveMyItem("AmmoStakes_001")
         RemoveMyItem("AmmoStakes_002")
-    elseif mapname == "DM_Pyscho" then
+    elseif mapname == "DM_Psycho" then
         RemoveMyItem("AmmoStakes_001")
         RemoveMyItem("AmmoStakes_002")
     elseif mapname == "DM_Illuminati" then
