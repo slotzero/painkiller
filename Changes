@@ -1,6 +1,6 @@
-$Id: Changes,v 1.2 2006/03/14 23:16:31 slotzero Exp $
+$Id: Changes,v 1.3 2006/03/21 10:39:40 slotzero Exp $
 
-Version 0.1  Tue Mar 14 18:11:21 EST 2006
+Version 0.x  Tue Mar 21 05:36:35 EST 2006
 
     - Bug Fixes
 
@@ -17,6 +17,8 @@ Version 0.1  Tue Mar 14 18:11:21 EST 2006
           for 15 seconds.
 
         - Limited suicide to once every 30 seconds.
+
+        - Prevent damage when landing on jump pad from any height.
 
         - In weapons stay mode, you can continue to get ammo from a weapon even if
           you already have that weapon.  The weapon will raise up a little to
