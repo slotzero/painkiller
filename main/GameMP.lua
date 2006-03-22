@@ -1665,6 +1665,8 @@ function ChatSpamProtect(clientID,txt)
     local timestamp = INP.GetTime()
     local spam = false
 
+    if not player then return false end
+
     if player.ChatMsgBlock > timestamp then
         local time = math.ceil(player.ChatMsgBlock - timestamp)
         local seconds = " seconds"
