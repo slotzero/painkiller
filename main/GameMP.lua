@@ -599,7 +599,7 @@ function Game:OnNewPlayerInGame(clientID,entity,name,score,kills,deaths,pu_state
     NET.SetSpectator(clientID,spectator)
 
     -- tworze statystyke dla nowego playera
-    Game.PlayerStats[clientID] = {ClientID = clientID, Name = name, Score = score, Kills = kills, Deaths = deaths, Ping = 0, PacketLoss = 0, Team = team, State = state, Spectator = spectator}
+    Game.PlayerStats[clientID] = {ClientID = clientID, Name = name, Score = score, Kills = kills, Deaths = deaths, Ping = 0, PacketLoss = 0, Team = team, State = state, Spectator = spectator, ChatMsgTime = 0, ChatMsgCount = 0, ChatMsgBlock = 0}
     local ps = Game.PlayerStats[clientID]
     MPSTATS.Update(ps.ClientID,ps.Name, ps.Score, ps.Kills, ps.Deaths, ps.Ping, ps.PacketLoss, ps.Team, ps.State, ps.Spectator)
     ps._Entity = entity
@@ -1661,38 +1661,43 @@ end
 function ChatSpamProtect(clientID,txt)
     if clientID == ServerID then return false end
 
-    local player = Game:FindPlayerByClientID(clientID)
+    local ps = Game.PlayerStats[clientID]
     local timestamp = INP.GetTime()
     local spam = false
 
-    if not player then return false end
+    if not ps then return false end
 
-    if player.ChatMsgBlock > timestamp then
-        local time = math.ceil(player.ChatMsgBlock - timestamp)
+    if timestamp - ps.ChatMsgTime > 5 then
+        ps.ChatMsgTime = 0
+        ps.ChatMsgCount = 0
+    end
+
+    if ps.ChatMsgBlock > timestamp then
+        local time = math.ceil(ps.ChatMsgBlock - timestamp)
         local seconds = " seconds"
         if time == 1 then seconds = " second" end
         SendNetMethod(Game.ConsoleMessage,clientID,true,true,"You will be allowed to speak in "..time..seconds)
         return true
     end
 
-    player.ChatMsgCount = player.ChatMsgCount + 1
-    player.ChatMsgBlock = 0
+    ps.ChatMsgCount = ps.ChatMsgCount + 1
+    ps.ChatMsgBlock = 0
 
-    if player.ChatMsgCount >= 5 then
+    if ps.ChatMsgCount >= 5 then
         spam = true
-    elseif player.ChatMsgCount >= 3 and (timestamp - player.ChatMsgTime) <= 1 then
+    elseif ps.ChatMsgCount >= 3 and (timestamp - ps.ChatMsgTime) <= 1 then
         spam = true
-    elseif player.ChatMsgCount >= 2 and string.len(txt) > 10 and (timestamp - player.ChatMsgTime) <= 0.75 then
+    elseif ps.ChatMsgCount >= 2 and string.len(txt) > 10 and (timestamp - ps.ChatMsgTime) <= 0.75 then
         spam = true
     end
 
     if spam then
-        player.ChatMsgBlock = timestamp + 15
+        ps.ChatMsgBlock = timestamp + 15
         SendNetMethod(Game.ConsoleMessage,clientID,true,true,"** CHAT SPAM DETECTED -- YOU CANNOT SPEAK FOR 15 SECONDS **")
         return true
     end
 
-    player.ChatMsgTime = timestamp
+    ps.ChatMsgTime = timestamp
     return false
 end
 --============================================================================
