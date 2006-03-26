@@ -953,7 +953,8 @@ function Game:CheckWarmUpStatus()
     -- end
 
     -- BREAK WHEN PLAYING
-    if Game:IsServer() then
+    --Slot Zero, 03-26-2006: Fix spectator bug.
+    if Game:IsServer() and MPCfg.GameMode ~= "Free For All" then
         if MPCfg.GameState == GameStates.Playing and
            (pbreak >= n/2 or (MPGameRules[Cfg.GameMode].Teams and Cfg.StopMatchOnTeamQuit and (blues==0 or reds==0)))
         then
