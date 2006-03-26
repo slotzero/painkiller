@@ -1,8 +1,11 @@
-$Id: Changes,v 1.3 2006/03/21 10:39:40 slotzero Exp $
+$Id: Changes,v 1.4 2006/03/26 22:26:22 slotzero Exp $
 
-Version 0.x  Tue Mar 21 05:36:35 EST 2006
+Version 0.x  Sun Mar 26 16:52:25 EST 2006
 
     - Bug Fixes
+
+        - Entering and leaving spectator mode when no players are on causes
+          the level to change.  This is fixed.
 
         - Removed items trapped outside the level.
 
@@ -11,6 +14,9 @@ Version 0.x  Tue Mar 21 05:36:35 EST 2006
         - Prevent ammo pick with max ammo for minigun, shurikens, and electro.
 
     - Changes
+
+        - Prevent voting for 30 seconds after the level spawns to allow all of the
+          players to load.
 
         - Added chat spam protection which prevents players from spamming the console
           by speaking too frequently.  Once triggered, you're prevented from speaking
