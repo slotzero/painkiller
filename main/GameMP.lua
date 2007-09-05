@@ -967,7 +967,7 @@ end
 function Game:StartVotingRequest(clientID,cmd,params)
 
     --Slot Zero, 03-14-2006: Don't allow voting for 30 seconds after level load.
-    if math.ceil(Game._TimeLimitOut) < 30 then
+    if MPCfg.GameMode == "Free For All" and math.ceil(Game._TimeLimitOut) < 30 then
         SendNetMethod(Game.ConsoleMessage,clientID,true,true,"** WAITING FOR PLAYERS TO LOAD **")
         return
     end
